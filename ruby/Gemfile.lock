@@ -1,0 +1,13 @@
+GEM
+  remote: https://ruby.taobao.org/
+  specs:
+    statsd-ruby (1.3.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  statsd-ruby
+
+BUNDLED WITH
+   1.11.2
