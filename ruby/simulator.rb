@@ -27,6 +27,7 @@ class Simulator
 
 			chargers.each do |c|
 				fields.each do |f, v|
+					p f
 					if v.kind_of? Array
 						value = v[Random.new.rand(v.length)]	
 						value *= 100
@@ -48,4 +49,4 @@ class Simulator
 end
 
 
-Simulator.new('localhost', 8125).run 
+Simulator.new('127.0.0.1', 8125).run 
