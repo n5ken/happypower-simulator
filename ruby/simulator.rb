@@ -3,12 +3,14 @@
 require 'rubygems'
 require 'statsd'
 
-
 class Simulator 
 
-	def initialize(host, port)
+	def initialize(host, port, interval)
+		p host
+		p interval
 		@host = host
 		@port = port
+		@interval = interval
 		@statsd = Statsd.new @host, @port
 	end
 
@@ -23,8 +25,6 @@ class Simulator
 				 }
 
 		loop do
-			p "sending data"
-
 			chargers.each do |c|
 				fields.each do |f, v|
 					p f
@@ -41,12 +41,16 @@ class Simulator
 				end	
 			end
 
-			sleep 2 	
+			sleep @interval 	
 		end
 
 	end
 
 end
 
+server = ARGV[0]
+server = '127.0.0.1' unless server
+interval = ARGV[1]
+interval = 5 unless interval
 
-Simulator.new('127.0.0.1', 8125).run 
+Simulator.new(server, 8125, interval).run 
