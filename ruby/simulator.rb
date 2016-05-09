@@ -27,9 +27,8 @@ class Simulator
 		loop do
 			chargers.each do |c|
 				fields.each do |f, v|
-					p f
 					if v.kind_of? Array
-						value = v[Random.new.rand(v.length)]	
+						value = v.sample
 						value *= 100
 					else
 						value = Random.new.rand(v) 
@@ -37,6 +36,7 @@ class Simulator
 						value += Random.rand(100)
 					end
 					# We will devide 100 in the server side while taking the number since Statsd doesn't support decimal numbers
+					p "charger.#{c}.#{f} = #{value}"
 					@statsd.timing "charger.#{c}.#{f}", value
 				end	
 			end
