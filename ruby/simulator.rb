@@ -75,11 +75,13 @@ class Simulator
 			end
 		end
 		previous_values[c][f] = value
-		puts "........................#{c}:#{f}:....#{previous_values[c][f]}......................#{previous_increases[c][f]}" if f == :voltage
 		previous_increases[c][f] = 0 if value >= v.max 
 		previous_increases[c][f] = 1 if value <= v.min || value <= 0
 		# We will devide 100 in the server side while taking the number since Statsd doesn't support decimal numbers
-		@statsd.timing "charger.#{c}.#{f}", (value * 100).to_i + Random.new.rand(100)	 	
+		final_value = value.to_i
+		final_value = value.to_i * 100 + Random.new.rand(100) unless v.kind_of? Array
+		puts "#{c}:#{f}....#{final_value}" 
+		@statsd.timing "charger.#{c}.#{f}", final_value	 	
 	end
 end
 
