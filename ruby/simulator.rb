@@ -19,14 +19,6 @@ class Simulator
 		@statsd = Statsd.new @host, @port
 	end
 	def run
-<<<<<<< Updated upstream
-		chargers = ['5190001001001', '5190001001002']
-		fields = { 		electricity: 6..100, 
-					voltage: 220..1000, 
-					parking_lot_available: [0, 1], 
-					power_consumption: 10000..20000, 
-					temperature: 10..60,
-=======
 		chargers = ["SMART_LINK_00123456ABCDEF", "SMART_LINK_00123456ABCDEE"]
 		fields = { 		a_phase_current: 0..100, 
 					b_phase_current: 0..100, 
@@ -47,7 +39,6 @@ class Simulator
 					total_power_factor: 50..90, 
 					frequency: 45..55, 
 					temperature: 10..60, 
->>>>>>> Stashed changes
 				 }	
 		previous_fields = fields.hmap { |k, v| { k.to_sym => v.min } }
 		previous_increase = fields.hmap { |k, v| {k.to_sym => 1 }}
@@ -111,7 +102,7 @@ class Simulator
 						previous_values[c][f] = previous_values[c][:c_phase_current] * previous_values[c][:c_phase_volt] * 1.732 if f == :c_phase_active_power 
 						previous_values[c][f] = previous_values[c][:a_phase_active_power] + previous_values[c][:b_phase_active_power] + previous_values[c][:c_phase_active_power] if f == :total_active_power 
 					end
-					previous_values[c][f] = previous_value[c][:total_active_power] * 1/3600 if f == :total_positive_active_energy
+					previous_values[c][f] = previous_values[c][:total_active_power] * 1/3600 if f == :total_positive_active_energy
 				end
 			else
 				previous_values[c][f] = 0 if f == :a_phase_current || f == :b_phase_current || f == :c_phase_current || f == :total_phase_current
